@@ -57,14 +57,21 @@ LDI R16, HIGH(RAMEND)
 OUT SPH, R16
 
 main:  
+LDI R23, 5 ; we just want 5 blinking
 LDI R16, 0xFF  
 OUT DDRA, R16 ; PORTA is output
 
-back:  
+back: 
+
 COM R16 ; complement value in R16  
-OUT PORTA, R16 ; push the calue in R16 to PORTB  
+OUT PORTA, R16 ; push the value in R16 to PORTB  
 CALL DELAY  
+dec R23 ; each loop we will dec r23 until 0 and then we go out of the loop
+breq nextThings ; if r23 = 0 go to nextThings else
 RJMP back ; infinite loop (should be changed later to a couple of times, and then game start)
+
+ nextThings:
+	nop;
 
 delay:  
 LDI R17, 50  
