@@ -24,9 +24,9 @@ OUT PORTA, R16 ; push the value in R16 to PORTB
 CALL delay  
 dec R23 ; each loop we will dec r23 until 0 and then we go out of the loop
 ; cpi r23, 0x00 ; compare r23 to 0		//useless
-breq nextThings ; if r23 = 0 go to nextThings else
-RJMP back ; infinite loop (should be changed later to a couple of times, and then game start)
-
+;breq nextThings ; if r23 = 0 go to nextThings else
+brne back ; infinite loop (should be changed later to a couple of times, and then game start)
+jmp nextThings
 
 delay:  
 	LDI R17, 50  
