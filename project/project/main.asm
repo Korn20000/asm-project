@@ -11,6 +11,28 @@ LDI r20, 0x00 ; r20 = 0000 0000
 out ddrb, r20 ; ddrb mode output (to send info from switch to leds)
 ldi r21, 0xff ; r21 = 1111 1111
 out ddra, r21 ; ddra mode input (to know the leds)
+
+stack:
+; r13 to r20 is for the stack
+; value will be 1, 3, 1, 5, 0, 7, 2, 4 so
+clr r13
+clr r14
+clr r15
+clr r16
+clr r17
+clr r18
+clr r19
+clr r20
+
+ldi r13, 0b11111101 ; led 1 
+ldi r14, 0b11110111 ; led 3
+ldi r15, 0b11111101 ; led 1
+ldi r16, 0b11011111 ; led 5
+ldi r17, 0b11111110	; led 0
+ldi r18, 0b01111111	; led 7
+ldi r19, 0b11111011	; led 2
+ldi r20, 0b11101111	; led 4
+
 /*
 Again: 
 	in r19, pinb
@@ -23,8 +45,8 @@ Again:
 Again2:
 clr r22		; erase everything
 in r22, pinb	; put the value of the switches in r22
-cpi r22, 0x00	; compare r22 w/ the value 0
-brne next		; if r22 <> 0 go to next
+cpi r22, 0xff	; compare r22 w/ the value 0xff
+brne next		; if r22 <> 0xff go to next
 jmp Again2		; else jmp to Again2
 
 
