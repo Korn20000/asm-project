@@ -13,7 +13,7 @@ LDI R16, HIGH(RAMEND)
 OUT SPH, R16
 
 main:  
-LDI R23, 5 ; we just want 5 blinking
+LDI R23, 6 ; we just want 5 blinking
 LDI R16, 0xFF  
 OUT DDRA, R16 ; PORTA is output
 
