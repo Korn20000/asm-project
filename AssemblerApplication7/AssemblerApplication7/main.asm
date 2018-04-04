@@ -2,9 +2,8 @@
 ; AssemblerApplication7.asm
 ;
 ; Created: 03/04/2018 10:09:29
-; Author : marega
+; Author : KoRn
 ;
-
 
 ;==============indication on game startup=================;
 LDI R16, LOW(RAMEND)
@@ -29,21 +28,25 @@ RJMP startGameBlink ; loop back and break if R23 is 0*/
 
 
 
-;==============indication on game win=================; ;;;;;;;Need to rethink this..................
-LDI R23, 8 ; MAX LED
-LDI R16, 0x01 ; start LED
+;==============indication on game win=================;
+LDI R16, 0xFF ; start LED
 OUT DDRA, R16 ; PORTA is output
 
+LDI R20, 1
+LDI R21, 0
 ;;increment LED upto 8
 gameWin:
-OUT PORTA, R16 ; push the value in R16 to PORTA
+OUT PORTA, R20
 CALL delay
-INC R16 ; increment R16 and compare with R23 stop afterwards
-CP R23, R16 
-BREQ startGame
-RJMP gameWin ; loop back and break if R16 is not 8
-/*
+NOP
 
+OUT PORTA, R21
+INC R20
+
+BREQ startGame
+BRNE gameWin ; loop back and break if R16 is not 8
+
+/*
 ;==============indication on game lose=================;
 ;;basically it is the same as start game just with a long delay and blink once
 
@@ -69,9 +72,9 @@ RJMP startGame ;this should break when done with 5 blinks aka. it should start t
 delay:  
 LDI R17, 10  
 loop3: 
-LDI R18, 255  
+LDI R18, 50  
 loop2: 
-LDI R19, 255  
+LDI R19, 100  
 loop1: 
 DEC R19  
 BRNE loop1 ;keep decreasing R19
