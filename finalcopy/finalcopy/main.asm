@@ -111,7 +111,12 @@ rjmp Again2		; else jmp to Again2
 
 next:
 CP R23, R24		; compare sequence with what the user press
+LDI R20, 1
+LDI r21, 0
+LDI r19, 2
 BREQ goodAnswer; ; if r23 = r24 go to good answer
+LDI r19, 4 ; we just want 1 long blink
+LDI r20, 0xFF
 BRNE badAnswer; if r23 <> r24 go to bad answer
 
 ;scenario : led qui clignote 
@@ -136,9 +141,6 @@ goodAnswer:
 ;;Registers for good answer
 ;LDI R19, 0xFF ; start LED
 ;OUT DDRA, r19 ; PORTA is output
-LDI R20, 1
-LDI r21, 0
-ldi r19, 2
 OUT PORTA, r20
 CALL delay
 NOP
@@ -156,8 +158,7 @@ CLR r21
 
 
 badAnswer:
-LDI r19, 4 ; we just want 1 long blink
-LDI r20, 0xFF
+
 ;OUT DDRA, r20 ; PORTA is output
 COM r20 ; complement value in R16
 OUT PORTA, r20 ; push the value in R16 to PORTA
