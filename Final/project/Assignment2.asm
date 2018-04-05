@@ -25,14 +25,18 @@ OUT DDRA, R21 ; ddra mode input (to know the leds)
 startGameBlink:
 COM R21 ; complement value in R16
 OUT PORTA, R21 ; push the value in R16 to PORTA
-CALL delay
+//CALL delay
 DEC R22 ; each loop we will dec r23 until 0 and then we go out of the loop
-BREQ start_stop_game2
+BREQ start
 RJMP startGameBlink ; loop back and break if R23 is 0
 
+
+/*
 start_stop_game2:
 NOP
 RJMP start_stop_game2 ;this should break when done with 5 blinks aka. it should start the game
+*/
+
 
 ; clear register and add our sequence
 CLR R16 
@@ -135,9 +139,8 @@ CALL delay
 NOP
 OUT PORTA, R31
 INC R30
-BREQ start_stop_game
+BREQ nextLevel
 BRNE goodAnswer ; loop back and break if R16 is not 8
-CALL nextLevel 
 
 CLR R29
 CLR R30
@@ -154,9 +157,14 @@ COM R30 ; complement value in R16
 OUT PORTA, R30 ; push the value in R16 to PORTA
 CALL delay
 DEC R29 ; each loop we will dec r23 until 0 and then we go out of the loop
-BREQ start_stop_game
+BREQ start
 RJMP badAnswer ; loop back and break if R23 is 0
-CALL startGameBlink
+
+CLR R29
+CLR R30
+CLR R31
+
+//CALL startGameBlink*/
 
 nextLevel: 
 CLR R19
