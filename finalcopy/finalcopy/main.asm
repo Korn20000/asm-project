@@ -125,6 +125,7 @@ OUT porta, R23
 CALL delay
 OUT porta, R27
 DEC R25
+cpi r25, 0
 BREQ start_stop_game
 RET
 
@@ -133,15 +134,16 @@ RET
 
 goodAnswer:
 ;;Registers for good answer
-LDI R19, 0xFF ; start LED
-OUT DDRA, r19 ; PORTA is output
+;LDI R19, 0xFF ; start LED
+;OUT DDRA, r19 ; PORTA is output
 LDI R20, 1
 LDI r21, 0
+ldi r19, 2
 OUT PORTA, r20
 CALL delay
 NOP
 OUT PORTA, r21
-INC r20
+dec r19
 BREQ nextLevel
 BRNE goodAnswer ; loop back and break if R16 is not 8
 
@@ -156,7 +158,7 @@ CLR r21
 badAnswer:
 LDI r19, 4 ; we just want 1 long blink
 LDI r20, 0xFF
-OUT DDRA, r20 ; PORTA is output
+;OUT DDRA, r20 ; PORTA is output
 COM r20 ; complement value in R16
 OUT PORTA, r20 ; push the value in R16 to PORTA
 CALL delay
